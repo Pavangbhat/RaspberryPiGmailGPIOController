@@ -16,7 +16,7 @@ from email import message_from_bytes #requires python3
 import RPi.GPIO as GPIO
 from sys import exit
 
-
+#SETTING pin numbering system as BCM
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
@@ -29,9 +29,10 @@ def Low(PinNumber):
     GPIO.setup(PinNumber, GPIO.OUT)
     GPIO.output(PinNumber, 0)
 
+mail = IMAP4_SSL('imap.gmail.com')  # connects IMAP services
+mail.login("YourMailId@gmail.com", "password")
+
 while True:
-    mail = IMAP4_SSL('imap.gmail.com')  # connects IMAP services
-    mail.login("YourMailId@gmail.com", "password")
     # print(mail.list())
     mail.select("INBOX")
     result, data = mail.search(None,"ALL")  # first item of list which contains all mail as [b'1 2 3 4'],#result is string as "ok"(status)
@@ -56,6 +57,8 @@ while True:
         PinNumber = int(SubjectList[0])  # converting string to a number
         PinSignal = int(SubjectList[1])
     except:
+        mail.logout()
+        print("LOGGED OUT")
         exit(0)
 
 

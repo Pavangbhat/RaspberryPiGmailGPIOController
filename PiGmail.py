@@ -30,7 +30,7 @@ def Low(PinNumber):
     GPIO.output(PinNumber, 0)
 
 mail = IMAP4_SSL('imap.gmail.com')  # connects IMAP services
-mail.login("YourMailId@gmail.com", "password")
+mail.login("YourMailId@gmail.com", "password")#it is recommended to have separate account for the purpose
 
 while True:
     # print(mail.list())
